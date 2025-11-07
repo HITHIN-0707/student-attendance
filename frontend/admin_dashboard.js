@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and display all user data
     async function loadAllUsers() {
         try {
-            const response = await fetch('https://student-attendance-backend-1287.onrender.com', {
+            const response = await fetch('http://localhost:3000/api/admin/all-users', {
                 method: 'GET',
                 headers: {
                     'x-auth-token': token
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('https://student-attendance-backend-1287.onrender.com', {
+            const response = await fetch('http://localhost:3000/api/admin/add-admin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         try {
-            const response = await fetch('https://student-attendance-backend-1287.onrender.com', {
+            const response = await fetch('http://localhost:3000/api/export', {
                 method: 'GET',
                 headers: { 'x-auth-token': token }
             });

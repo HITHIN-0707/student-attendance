@@ -4,7 +4,7 @@
 let allAttendanceData = []; // This will hold data fetched from the server
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user'));
-const API_URL = 'https://student-attendance-backend-1287.onrender.com';
+const API_URL = 'http://localhost:3000/api';
 
 // --- 2. Check login status (Token) ---
 if (!token || !user) {

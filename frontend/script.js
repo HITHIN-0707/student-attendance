@@ -9,7 +9,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
     try {
         // Send login data to the backend server
-        const response = await fetch('https://student-attendance-backend-1287.onrender.com', {
+        const response = await fetch('http://localhost:3000/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

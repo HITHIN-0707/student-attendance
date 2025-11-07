@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         try {
             // Send data to the backend
-            const response = await fetch('https://student-attendance-backend-1287.onrender.com', {
+            const response = await fetch('http://localhost:3000/api/details', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
