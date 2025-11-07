@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Plan Maker</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --bg-dark: linear-gradient(135deg, #141e30, #243b55);
+  --bg-light: linear-gradient(135deg, #d7e1ec, #f1f5fa);
+  --glass-dark: rgba(255,255,255,0.06);
+  --glass-light: rgba(0,0,0,0.1);
+  --text-dark: #e8e8e8;
+  --text-light: #1c1c1c;
+  --accent1: #7367f0;
+  --accent2: #9b59b6;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-dark);
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+
+body.light {
+  background: var(--bg-light);
+  color: var(--text-light);
+}
+
+.container {
+  max-width: 850px;
+  margin: 60px auto;
+  background: var(--glass-dark);
+  backdrop-filter: blur(25px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  transition: all 0.4s ease;
+}
+
+body.light .container {
+  background: var(--glass-light);
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+h1 {
+  text-align: center;
+  font-weight: 600;
+  color: var(--accent1);
+  text-shadow: 0 0 15px rgba(115,103,240,0.5);
+  margin-bottom: 15px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.toggle-btn {
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: inherit;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.toggle-btn:hover {
+  background: var(--accent1);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+input, button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input {
+  flex: 1;
+  background: rgba(255,255,255,0.08);
+  color: inherit;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+button {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(115,103,240,0.5);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Delete button */
+td button {
+  background: transparent;
+  border: none;
+  color: #ff6b6b;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+td button:hover {
+  text-decoration: underline;
+  transform: scale(1.1);
+}
+
+.progress-container {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 15px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  transition: width 0.6s ease;
+}
+
+#countdown {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Glass popup with slide-up + bounce + glow */
+.popup {
+  display: none;
+  position: fixed;
+  bottom: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 25px;
+  color: #fff;
+  text-align: center;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  transition: bottom 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1000;
+}
+
+.popup.active {
+  display: block;
+  animation: slideBounce 0.6s ease forwards;
+  box-shadow: 0 0 40px rgba(115,103,240,0.6), 0 0 60px rgba(155,89,182,0.5);
+}
+
+@keyframes slideBounce {
+  0% { bottom: -100%; }
+  60% { bottom: 60px; }
+  80% { bottom: 50px; }
+  100% { bottom: 55px; }
+}
+
+.popup button {
+  margin-top: 10px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: white;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    margin: 30px 15px;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="controls">
+    <h1>📘 Study Plan Maker</h1>
+    <button class="toggle-btn" id="themeToggle">🌗 Toggle Mode</button>
+  </div>
+
+  <div class="input-group">
+    <input type="text" id="subject" placeholder="Enter subject">
+    <input type="number" id="hours" placeholder="Hours to study">
+    <button onclick="addSubject()">Add</button>
+  </div>
+
+  <div class="input-group">
+    <label><b>Exam Date:</b></label>
+    <input type="date" id="examDate">
+    <button onclick="generatePlan()">Generate Plan</button>
+  </div>
+
+  <div id="countdown">⏳ Exam countdown: -- days</div>
+
+  <table id="subjectTable">
+    <thead><tr><th>Subject</th><th>Hours</th><th>Action</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>📅 Study Plan</h2>
+  <table id="planTable">
+    <thead><tr><th>Date</th><th>Subject</th><th>Hours</th><th>Progress</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <footer>🌙 "Small progress each day adds up to big results."</footer>
+</div>
+
+<!-- Slide-Up Glass Popup -->
+<div class="popup" id="summaryPopup">
+  <h3>🎯 Study Plan Summary</h3>
+  <p id="summaryText"></p>
+  <p><i id="quote"></i></p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+    // --- NEW DATABASE-CONNECTED SCRIPT ---
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html'; // Redirect if not logged in
+    }
+
+    // Global variables, will be populated from server
+    let subjects = [];
+    let examDate = "";
+    const API_URL = 'http://localhost:3000/api/studyplan';
+
+    const quotes = [
+        "“Study hard, stay humble.”",
+        "“Discipline beats motivation.”",
+        "“Your future self will thank you.”",
+        "“Stay patient, your time is coming.”"
+    ];
+
+    // --- Theme Toggle (Unchanged) ---
+    const themeToggle = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light');
+    themeToggle.onclick = () => {
+        document.body.classList.toggle('light');
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    };
+
+    // --- Core Data Functions ---
+
+    // 1. Save the *entire* plan to the database
+    async function savePlan() {
+        const planData = {
+            subjects: subjects,
+            examDate: document.getElementById('examDate').value
+        };
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token
+                },
+                body: JSON.stringify(planData)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to save plan');
+            }
+            console.log('Study plan saved to database.');
+        } catch (err) {
+            console.error(err);
+            alert('Error saving study plan.');
+        }
+    }
+
+    // 2. Load data from the database when page opens
+    async function loadPlan() {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'GET',
+                headers: { 'x-auth-token': token }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch plan');
+            }
+            const data = await response.json();
+            
+            // Populate our global variables
+            subjects = data.subjects || [];
+            examDate = data.examDate || "";
+
+            // Set the exam date input
+            if (examDate) {
+                document.getElementById('examDate').value = examDate;
+                startCountdown(examDate);
+            }
+            
+            // Show the subjects
+            showSubjects();
+
+            // If we have subjects and a date, generate the plan
+            if (subjects.length > 0 && examDate) {
+                generatePlan(false); // Pass false to skip saving
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert('Error loading study plan.');
+        }
+    }
+
+    // --- Action Functions (Modified to save) ---
+
+    function addSubject() {
+        const s = document.getElementById('subject').value.trim();
+        const h = parseFloat(document.getElementById('hours').value);
+        if (!s || isNaN(h) || h <= 0) return alert("Enter valid subject and hours");
+        
+        subjects.push({ s, h });
+        
+        document.getElementById('subject').value = '';
+        document.getElementById('hours').value = '';
+        
+        showSubjects();
+        savePlan(); // Save to DB
+    }
+
+    function removeSubject(i) {
+        subjects.splice(i, 1);
+        showSubjects();
+        savePlan(); // Save to DB
+    }
+
+    // The 'Generate Plan' button in the HTML calls this
+    function generatePlan(shouldSave = true) {
+        const date = document.getElementById('examDate').value;
+        if (!date || subjects.length === 0) return alert('Enter subjects and exam date');
+        
+        const tbody = document.querySelector('#planTable tbody');
+        tbody.innerHTML = '';
+
+        let totalHours = 0;
+        subjects.forEach(x => totalHours += x.h);
+
+        const start = new Date();
+        const end = new Date(date);
+        const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+        
+        if (days <= 0) {
+             tbody.innerHTML = '<tr><td colspan="4">Exam date must be in the future!</td></tr>';
+             return;
+        }
+
+        let d = new Date(start);
+        let i = 0;
+
+        for (let n = 0; n < days; n++) {
+            if (i >= subjects.length) i = 0;
+            const sub = subjects[i];
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${d.toISOString().split('T')[0]}</td>
+                <td>${sub.s}</td>
+                <td>${(sub.h / days).toFixed(1)}</td>
+                <td><div class="progress-container"><div class="progress-bar" id="bar${n}"></div></div></td>`;
+            tbody.appendChild(tr);
+            animateProgress(`bar${n}`);
+            d.setDate(d.getDate() + 1);
+            i++;
+        }
+
+        startCountdown(date);
+        
+        if (shouldSave) {
+            showSummary(totalHours);
+            savePlan(); // Save to DB
+        }
+    }
+
+
+    // --- Unchanged Visual/Helper Functions ---
+
+    function showSubjects() {
+        const tbody = document.querySelector('#subjectTable tbody');
+        tbody.innerHTML = '';
+        subjects.forEach((x, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${x.s}</td><td>${x.h}</td><td><button onclick="removeSubject(${i})">🗑️ Delete</button></td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function animateProgress(id) {
+        const bar = document.getElementById(id);
+        if (!bar) return; // Guard clause
+        let w = 0;
+        const anim = setInterval(() => {
+            if (w >= 100) clearInterval(anim);
+            else { w += 3; bar.style.width = w + '%'; }
+        }, 25);
+    }
+
+    let countdownInterval;
+    function startCountdown(date) {
+        if (countdownInterval) clearInterval(countdownInterval); // Clear previous
+        const target = new Date(date).getTime();
+        const cd = document.getElementById('countdown');
+        
+        countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const d = Math.floor((target - now) / (1000 * 60 * 60 * 24));
+            cd.innerHTML = `⏳ Exam countdown: ${d} days`;
+        }, 1000);
+    }
+
+    function showSummary(total) {
+        const popup = document.getElementById('summaryPopup');
+        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById('summaryText').textContent = `Total planned study hours: ${total}`;
+        document.getElementById('quote').textContent = quote;
+        popup.classList.add('active');
+    }
+
+    function closePopup() {
+        document.getElementById('summaryPopup').classList.remove('active');
+    }
+
+    // --- Start the page ---
+    loadPlan();
+</script>
+</body>
+</html>

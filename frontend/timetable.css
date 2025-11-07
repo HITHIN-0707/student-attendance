@@ -1,0 +1,189 @@
+/* Import Poppins font for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Main Body and Background */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0d0d0d; /* Dark background from dashboard.css */
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #f0f0f0; /* Light text */
+    padding: 2em 0;
+}
+
+h1 {
+    margin: 30px 0 10px;
+    font-size: 2rem;
+    color: #2ecc71; /* Green accent */
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+    animation: fadeIn 1s ease;
+}
+
+/* Tab Navigation */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab {
+    padding: 10px 18px;
+    background: #1a1a1a; /* Darker card background */
+    color: #f0f0f0;
+    border-radius: 25px;
+    border: 1px solid #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.tab:hover {
+    background: #2ecc71; /* Green hover */
+    color: #0d0d0d;
+    transform: scale(1.05);
+}
+
+.tab.active {
+    background: #2ecc71;
+    color: #0d0d0d;
+    border-color: #2ecc71;
+}
+
+/* Main Container (Card) */
+.container {
+    width: 90%;
+    max-width: 850px;
+    background: #1a1a1a; /* Dashboard content background */
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    animation: slideUp 0.8s ease;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    color: #f0f0f0;
+}
+
+th {
+    background: #2c2c2c; /* Slightly lighter header */
+    color: #2ecc71; /* Green header text */
+}
+
+tr:hover td {
+    background-color: #222;
+    transition: 0.3s;
+}
+
+/* Input and Button Styling */
+.input-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 10px 12px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    outline: none;
+    font-family: "Poppins";
+    background-color: #333;
+    color: #f0f0f0;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.4);
+}
+
+button {
+    background: #3498db; /* Blue for primary actions */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+}
+
+.backup-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.backup-buttons button, .backup-buttons label {
+    background: #9b59b6; /* Purple/Accent for data management */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.backup-buttons button:hover, .backup-buttons label:hover {
+    background: #8e44ad;
+    transform: scale(1.05);
+}
+
+/* Delete Button Overwrite */
+td button {
+    background: #e74c3c !important; /* Red for Delete */
+    border: none;
+    padding: 6px 10px !important;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+td button:hover {
+    background: #c0392b !important;
+    transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    th, td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}

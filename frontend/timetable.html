@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class Timetable</title>
+  <link rel="stylesheet" href="timetable.css"> </head>
+<body>
+  <h1>📘 Weekly Class Timetable</h1>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showDay('monday')">Monday</div>
+    <div class="tab" onclick="showDay('tuesday')">Tuesday</div>
+    <div class="tab" onclick="showDay('wednesday')">Wednesday</div>
+    <div class="tab" onclick="showDay('thursday')">Thursday</div>
+    <div class="tab" onclick="showDay('friday')">Friday</div>
+    <div class="tab" onclick="showDay('saturday')">Saturday</div>
+  </div>
+
+  <div class="container">
+    <div class="input-section">
+      <input type="text" id="time" placeholder="Time (e.g. 9:00 AM - 10:00 AM)">
+      <input type="text" id="subject" placeholder="Subject">
+      <input type="text" id="room" placeholder="Room">
+      <button onclick="addClass()">Add Class</button>
+    </div>
+
+    <div class="backup-buttons">
+      <button onclick="downloadBackup()">⬇️ Backup Data</button>
+      <label style="background:#4a6fa5; color:white; padding:10px 15px; border-radius:8px; cursor:pointer;">
+        ⬆️ Restore Backup
+        <input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restoreBackup(event)">
+      </label>
+      <button onclick="clearAll()">🗑️ Clear All</button>
+    </div>
+
+    <div id="timetable"></div>
+  </div>
+
+ <script>
+    // --- NEW DATABASE-CONNECTED SCRIPT ---
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html'; // Redirect if not logged in
+    }
+
+    // This object will be populated from the server
+    let schedules = {
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+        saturday: []
+    };
+
+    let currentDay = "monday";
+    const API_URL = 'http://localhost:3000/api/timetable';
+
+    // --- Core Functions ---
+
+    // 1. Save the *entire* schedule to the database
+    async function saveData() {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token
+                },
+                body: JSON.stringify(schedules) // Send the whole schedule object
+            });
+            if (!response.ok) {
+                throw new Error('Failed to save timetable');
+            }
+            console.log('Timetable saved to database.');
+        } catch (err) {
+            console.error(err);
+            alert('Error saving timetable.');
+        }
+    }
+
+    // 2. Load data from the database when page opens
+    async function loadData() {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'GET',
+                headers: { 'x-auth-token': token }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch timetable');
+            }
+            const data = await response.json();
+            // Overwrite the local 'schedules' with server data
+            schedules = {
+                monday: data.monday || [],
+                tuesday: data.tuesday || [],
+                wednesday: data.wednesday || [],
+                thursday: data.thursday || [],
+                friday: data.friday || [],
+                saturday: data.saturday || []
+            };
+            showDay("monday"); // Show the first day
+        } catch (err) {
+            console.error(err);
+            alert('Error loading timetable.');
+        }
+    }
+
+    // 3. Switch visible day
+    function showDay(day) {
+        currentDay = day;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.tab[onclick="showDay('${day}')"]`).classList.add('active');
+        renderTable();
+    }
+
+    // 4. Add a new class to the local object
+    function addClass() {
+        const time = document.getElementById("time").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const room = document.getElementById("room").value.trim();
+
+        if (!time || !subject || !room) {
+            alert("Please fill all fields!");
+            return;
+        }
+
+        schedules[currentDay].push({ time, subject, room });
+        
+        // Clear inputs
+        document.getElementById("time").value = "";
+        document.getElementById("subject").value = "";
+        document.getElementById("room").value = "";
+        
+        renderTable(); // Update the visual table
+        saveData();    // Save the new data to the DB
+    }
+
+    // 5. Delete a class from the local object
+    function deleteClass(index) {
+        schedules[currentDay].splice(index, 1);
+        renderTable(); // Update the visual table
+        saveData();    // Save the change to the DB
+    }
+
+    // 6. (Unchanged) Render the visual HTML table
+    function renderTable() {
+        if (schedules[currentDay].length === 0) {
+            document.getElementById("timetable").innerHTML = "<p style='text-align:center; color:#ccc;'>No classes added yet.</p>";
+            return;
+        }
+
+        const tableHTML = `
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Subject</th>
+                    <th>Room</th>
+                    <th>Action</th>
+                </tr>
+                ${schedules[currentDay].map((row, i) => `
+                    <tr>
+                        <td>${row.time}</td>
+                        <td>${row.subject}</td>
+                        <td>${row.room}</td>
+                        <td><button onclick="deleteClass(${i})">🗑️ Delete</button></td>
+                    </tr>`).join("")}
+            </table>
+        `;
+        document.getElementById("timetable").innerHTML = tableHTML;
+    }
+
+    // 7. Clear all data
+    function clearAll() {
+        if (confirm("Are you sure you want to clear all data for all days?")) {
+            schedules = { monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: [] };
+            renderTable();
+            saveData();
+        }
+    }
+
+    // --- Remove the old, local-only backup buttons ---
+    // We get the container and clear it
+    const backupButtonsContainer = document.querySelector('.backup-buttons');
+    if (backupButtonsContainer) {
+        // We'll keep the "Clear All" button but remove the others.
+        backupButtonsContainer.innerHTML = '<button onclick="clearAll()">🗑️ Clear All</button>';
+    }
+
+    // --- Start the page ---
+    loadData();
+</script>
+</body>
+</html>

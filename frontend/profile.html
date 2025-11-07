@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .profile-card {
+            background-color: #2c2c2c;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+        }
+        .profile-card h1 {
+            color: #4CAF50;
+            margin-bottom: 0.5em;
+        }
+        .profile-details p {
+            font-size: 1.1em;
+            margin-bottom: 0.8em;
+            border-bottom: 1px solid #444;
+            padding-bottom: 0.5em;
+        }
+        .profile-details p strong {
+            color: #fff;
+            margin-right: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        li {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .back-btn {
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <h1>User Profile</h1>
+        <div id="profileDetails" class="profile-details">
+            <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+            <p><strong>College:</strong> <span id="college"></span></p>
+            <p><strong>Semester:</strong> <span id="semester"></span></p>
+            <p><strong>Year:</strong> <span id="year"></span></p>
+            <p><strong>Courses:</strong></p>
+            <ul id="coursesList"></ul>
+        </div>
+        <div id="noDetailsMsg" style="display: none;">
+            <p>No details found. Please go back to the dashboard and add them.</p>
+        </div>
+        
+        <div style="margin-top: 2em; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <button id="exportDataBtn" class="action-btn" style="background-color: #3498db;">Export Data (Backup)</button>
+            <input type="file" id="importFileInput" style="display: none;" accept="application/json">
+            <button id="importDataBtn" class="action-btn" style="background-color: #9b59b6;">Import Data (Restore)</button>
+        </div>
+        <button onclick="window.location.href='dashboard.html'" class="action-btn back-btn">Back to Dashboard</button>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

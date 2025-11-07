@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="welcome-section">
+            <h1 class="welcome-heading">WELCOME TO ATTENDANCE PORTAL</h1>
+            <p id="welcomeMsg" class="welcome-message"></p>
+        </div>
+        <div class="options">
+            <button id="addDetailsBtn" class="action-btn">Add Details</button>
+            <button id="profileBtn" class="action-btn">Profile</button>
+            <button id="studyplanner" class="action-btn">StudyPlan</button>
+            <button id="timetableBtn" class="action-btn">Timetable</button> 
+            <button id="logoutBtn" class="action-btn logout-btn">Logout</button>
+            
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="selection-container">
+            <div class="select-group">
+                <label for="year-select">Select Year:</label>
+                <select id="year-select" class="select-box">
+                    <option value="">Select Year</option>
+                </select>
+            </div>
+            <div class="select-group">
+                <label for="semester-select">Select Semester:</label>
+                <select id="semester-select" class="select-box">
+                    <option value="">Select Semester</option>
+                </select>
+            </div>
+            <div class="select-group">
+                <label for="attendance-date">Select Date:</label>
+                <input type="date" id="attendance-date" class="select-box">
+            </div>
+            <button id="reportBtn" class="action-btn report-btn">View Report</button>
+        </div>
+
+        <div id="coursesContainer" class="courses-container">
+            </div>
+
+        <div id="reportContainer" class="report-container" style="display: none;">
+            </div>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

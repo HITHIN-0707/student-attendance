@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Details</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .form-container {
+            background-color: #2c2c2c;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 1.5em;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: #4CAF50;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        #subjectInputs {
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add User Details</h1>
+        <form id="detailsForm">
+            <div class="form-group">
+                <label for="collegeName">College Name</label>
+                <input type="text" id="collegeName" required>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semester</label>
+                <input type="text" id="semester" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" id="year" required>
+            </div>
+            <div class="form-group">
+                <label for="numSubjects">Number of Subjects</label>
+                <input type="number" id="numSubjects" min="1" required>
+            </div>
+            <div id="subjectInputs">
+                </div>
+            <button type="submit" class="action-btn" style="width: 100%;">Save Details</button>
+        </form>
+    </div>
+
+    <script src="add_details.js"></script>
+</body>
+</html>

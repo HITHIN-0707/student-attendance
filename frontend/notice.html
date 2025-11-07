@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Important Notice</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+        .notice-container {
+            background-color: #1a1a1a;
+            border: 2px solid #4CAF50;
+            padding: 30px;
+            margin: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        h2 {
+            color: #4CAF50;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        p {
+            margin: 15px 0;
+            line-height: 1.6;
+            color: #bdbdbd;
+        }
+        .highlight {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .storage-warning {
+            color: #e74c3c;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .back-link:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="notice-container">
+    <h2>Welcome to the Attendance App! 🎉</h2>
+    <p>We're thrilled to have you! We're currently in a <span class="highlight">testing phase</span> to refine the experience and make it even better for you.</p>
+    
+    <p>For now, please note that all of your data, including your profile and attendance records, is stored <span class="highlight">securely on your device</span> and is not backed up to a server.</p>
+    
+    <p class="storage-warning">Heads up: Clearing your browser's data will permanently delete your information. Please keep this in mind!</p>
+    
+    <p>We're working hard to launch a <span class="highlight">fully-featured, server-backed version</span> soon to provide a more robust and seamless experience. Stay tuned!</p>
+    
+    <a href="index.html" class="back-link">Continue to App</a>
+</div>
+
+</body>
+</html>

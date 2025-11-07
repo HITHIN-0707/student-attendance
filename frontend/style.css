@@ -1,0 +1,171 @@
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    
+    /* --- NEW: Radium Glow Animated Gradient --- */
+    background: linear-gradient(-45deg, #39FF14, #00BFFF, #8A2BE2, #39FF14); /* Neon Green, Electric Blue, Vaporwave Violet, back to Green */
+    background-size: 400% 400%;
+    animation: GradientAnimation 20s ease infinite; /* Slower animation for a smoother glow effect */
+    /* --- END NEW --- */
+    
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh;
+}
+
+/* Keyframe Animation for smooth gradient transition */
+@keyframes GradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+/* Container styling (Semi-transparent dark card remains the same for contrast) */
+.container {
+    background: rgba(26, 26, 26, 0.9); /* Slightly more opaque dark background */
+    padding: 30px; 
+    border-radius: 12px; 
+    box-shadow: 0px 8px 35px rgba(57, 255, 20, 0.6); /* Added a slight green shadow to the card */
+    width: 320px;
+    max-width: 90%;
+}
+
+/* Heading styling */
+h2 {
+    text-align: center;
+    margin-bottom: 25px; 
+    color: #4CAF50; 
+    font-size: 1.8em;
+}
+
+/* Input fields styling */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #555; 
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: #333; 
+    color: white; 
+}
+
+input::placeholder {
+    color: #bbb;
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Add spacing between forms */
+form {
+    margin-bottom: 25px;
+}
+
+/* Signup Link */
+.signup-link {
+    font-size: 14px;
+    text-decoration: none;
+    color: #00BFFF; /* Electric Blue link */
+    font-weight: bold;
+    transition: color 0.3s ease;
+    display: block;
+    text-align: right; 
+    margin-top: 10px;
+}
+
+.signup-link:hover {
+    color: #8A2BE2; /* Vaporwave Violet hover */
+}
+
+
+/* Revised styling for the TERMS AND CONDITIONS link */
+.container form a[href="terms.html"] {
+    display: block; 
+    width: 100%;
+    margin-top: 20px; 
+    padding: 0; 
+    text-align: center;
+    text-decoration: none;
+    color: #8A2BE2; /* Vaporwave Violet link */
+    background-color: transparent; 
+    font-size: 1em; 
+    font-weight: bold; 
+    transition: color 0.3s ease; 
+}
+
+/* Hover effect for the link */
+.container form a[href="terms.html"]:hover {
+    color: #39FF14; /* Neon Green hover */
+    text-decoration: underline; 
+}
+
+
+/* Footer styling */
+footer {
+    position: fixed; 
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: #aaa; 
+    font-size: 0.9em;
+    background: rgba(26, 26, 26, 0.7); 
+}
+
+/* Link styling within the footer */
+footer a {
+    color: #4CAF50; 
+    text-decoration: none; 
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline; 
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 20px;
+        margin-top: 20px;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    input, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+.admin-note {
+    text-align: center;
+    font-size: 0.9em;
+    color: #bbb;
+    margin-top: 15px;
+}
