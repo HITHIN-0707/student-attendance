@@ -1,94 +1,222 @@
-/* Page styling */
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+/* --- GLOBAL RESET & FONTS --- */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #080710;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    overflow: hidden; /* Prevent scrollbars from animated shapes */
 }
 
-/* Card container */
-.container {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
-    width: 320px;
+/* --- ANIMATED BACKGROUND --- */
+.background {
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
 }
 
-/* Heading + link layout */
-.header {
+.shape {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* Glowing Orb 1 */
+.shape:first-child {
+    background: linear-gradient(#1845ad, #23a2f6);
+    left: -80px;
+    top: -80px;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Glowing Orb 2 */
+.shape:last-child {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    right: -30px;
+    bottom: -80px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* --- GLASSMORPHISM CARD --- */
+.signup-card {
+    height: auto;
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 40px 35px;
+    color: #ffffff;
+}
+
+/* --- HEADER --- */
+.card-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card-header h2 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 42px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.card-header p {
+    font-size: 14px;
+    color: #e5e5e5;
+}
+
+/* --- INPUTS --- */
+.input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+    gap: 10px;
 }
 
-/* Heading text */
-h2 {
-    margin: 0;
-    color: #333;
-}
-
-/* Link styling */
-.signup-link {
-    font-size: 14px;
-    text-decoration: none;
-    color: #4CAF50;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.signup-link:hover {
-    color: #45a049;
-}
-
-/* Input styling */
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-/* Button styling */
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background: linear-gradient(120deg, #4CAF50, #45a049);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-button:hover {
-    background: linear-gradient(120deg, #0d690b, #9c1d1d);
-}
-
-.signup-link {
-    font-size: 14px;
-    text-decoration: none;
-    color: #4e42fc;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.signup-link:hover {
-    color: #af1515;
-}
-
-.signup-link {
+.input-wrapper input {
     display: block;
-    text-align: right; /* moves link to right */
-    margin-top: 10px;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px 0 40px; /* Space for icon */
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #ffffff;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.input-wrapper input:focus {
+    background-color: rgba(255,255,255,0.15);
+    border-color: #23a2f6;
+    outline: none;
+    box-shadow: 0 0 10px rgba(35, 162, 246, 0.5);
+}
+
+.input-wrapper input::placeholder {
+    color: #e5e5e5;
+}
+
+/* Icons inside input */
+.input-wrapper .icon {
+    position: absolute;
+    left: 15px;
+    top: 24px; /* Adjust based on input height */
+    color: #ffffff;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* --- BUTTON --- */
+.glow-btn {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.glow-btn:hover {
+    background: #23a2f6;
+    color: white;
+    box-shadow: 0 0 20px #23a2f6, 0 0 40px #23a2f6;
+    transform: scale(1.02);
+}
+
+/* --- LINKS --- */
+.footer-link {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-link a {
+    color: #23a2f6;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.footer-link a:hover {
+    color: #ff512f;
+    text-shadow: 0 0 5px #ff512f;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 450px) {
+    .signup-card {
+        width: 90%;
+        padding: 30px 20px;
+    }
+    
+    .background {
+        width: 100%;
+    }
+    
+    .shape {
+        display: none; /* Hide floating orbs on very small screens to prevent overlap */
+    }
+}
+
+/* --- MOBILE RESPONSIVENESS FOR SIGNUP --- */
+@media (max-width: 500px) {
+    .background {
+        width: 100%; 
+        height: 100%;
+    }
+    
+    .shape {
+        display: none; /* Hide floating blobs on mobile to save space */
+    }
+    
+    form {
+        width: 90%; /* Fit screen width */
+        padding: 30px 20px;
+    }
+    
+    /* Stack inputs vertically if they are side-by-side */
+    .input-group-row {
+        flex-direction: column;
+    }
+    
+    .input-wrapper {
+        margin-bottom: 15px;
+    }
 }

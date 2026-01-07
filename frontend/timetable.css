@@ -187,3 +187,38 @@ td button:hover {
         font-size: 0.9rem;
     }
 }
+
+/* --- MOBILE RESPONSIVENESS FOR TIMETABLE --- */
+@media (max-width: 768px) {
+    
+    /* 1. Make the table scroll sideways */
+    #timetable {
+        display: block;
+        width: 100%;
+        overflow-x: auto; /* Adds a scrollbar ONLY to the table */
+        white-space: nowrap; /* Keeps text on one line */
+    }
+
+    /* 2. Adjust Input fields */
+    .input-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .input-section input, .input-section button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    /* 3. Adjust Tabs */
+    .tabs {
+        gap: 5px;
+    }
+    
+    .tab {
+        font-size: 12px;
+        padding: 8px 12px;
+        flex-grow: 1; /* Make tabs stretch to fill row */
+        text-align: center;
+    }
+}

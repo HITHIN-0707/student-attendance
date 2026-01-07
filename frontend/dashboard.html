@@ -3,54 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Student Dashboard</title>
     <link rel="stylesheet" href="dashboard.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        /* PDF Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .pdf-modal {
+            background: #15151e; padding: 30px; border-radius: 12px;
+            border: 1px solid #00f3ff; text-align: center; width: 350px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+        .pdf-modal h3 { color: #fff; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; }
+        .format-btn {
+            display: block; width: 100%; padding: 12px; margin: 10px 0;
+            background: #222; border: 1px solid #444; color: #fff;
+            cursor: pointer; border-radius: 6px; transition: 0.3s;
+            font-size: 16px;
+        }
+        .format-btn:hover { background: #00f3ff; color: #000; font-weight: bold; }
+        .cancel-btn { color: #ff4757; background: none; border: none; margin-top: 10px; cursor: pointer; text-decoration: underline; }
+    </style>
 </head>
 <body>
-    <header class="main-header">
-        <div class="welcome-section">
-            <h1 class="welcome-heading">WELCOME TO ATTENDANCE PORTAL</h1>
-            <p id="welcomeMsg" class="welcome-message"></p>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fas fa-user-graduate"></i>
+            <h2>PORTAL</h2>
         </div>
-        <div class="options">
-            <button id="addDetailsBtn" class="action-btn">Add Details</button>
-            <button id="profileBtn" class="action-btn">Profile</button>
-            <button id="studyplanner" class="action-btn">StudyPlan</button>
-            <button id="timetableBtn" class="action-btn">Timetable</button> 
-            <button id="logoutBtn" class="action-btn logout-btn">Logout</button>
-            
+        <div class="user-info">
+            <div class="avatar-circle"><i class="fas fa-user"></i></div>
+            <p id="welcomeMsg">Welcome User</p>
         </div>
-    </header>
+        <nav class="nav-links">
+            <button id="addDetailsBtn" class="nav-btn"><i class="fas fa-edit"></i> Add Details</button>
+            <button id="profileBtn" class="nav-btn"><i class="fas fa-id-card"></i> Profile</button>
+            <button id="studyplanner" class="nav-btn"><i class="fas fa-book-open"></i> Study Plan</button>
+            <button id="timetableBtn" class="nav-btn"><i class="fas fa-calendar-alt"></i> Timetable</button> 
+        </nav>
+        <div class="logout-section">
+            <button id="logoutBtn" class="nav-btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </aside>
 
     <main class="main-content">
+        <button id="menuToggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+
+        <header class="top-bar">
+            <h1>Attendance Overview</h1>
+            <div class="date-display" id="currentDateDisplay"></div>
+        </header>
+
         <div class="selection-container">
             <div class="select-group">
-                <label for="year-select">Select Year:</label>
-                <select id="year-select" class="select-box">
-                    <option value="">Select Year</option>
-                </select>
+                <label>Year</label>
+                <select id="year-select" class="select-box"><option value="">Select</option></select>
             </div>
             <div class="select-group">
-                <label for="semester-select">Select Semester:</label>
-                <select id="semester-select" class="select-box">
-                    <option value="">Select Semester</option>
-                </select>
+                <label>Semester</label>
+                <select id="semester-select" class="select-box"><option value="">Select</option></select>
             </div>
             <div class="select-group">
-                <label for="attendance-date">Select Date:</label>
+                <label>Date</label>
                 <input type="date" id="attendance-date" class="select-box">
             </div>
+            
+            <button id="downloadBtn" class="action-btn" style="background: #9b59b6; color:white; margin-left: 10px;">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </button>
+            
             <button id="reportBtn" class="action-btn report-btn">View Report</button>
         </div>
 
-        <div id="coursesContainer" class="courses-container">
-            </div>
-
-        <div id="reportContainer" class="report-container" style="display: none;">
-            </div>
+        <div id="coursesContainer" class="courses-container"></div>
+        <div id="reportContainer" class="report-container" style="display: none;"></div>
     </main>
 
+    <div id="pdfModalOverlay" class="modal-overlay">
+        <div class="pdf-modal">
+            <h3>Select PDF Format</h3>
+            <p style="color: #aaa; margin-bottom: 20px; font-size: 14px;">Choose how you want your report to look:</p>
+            
+            <button class="format-btn" onclick="generatePDF('simple')">
+                <i class="fas fa-list"></i> Simple Summary
+            </button>
+            
+            <button class="format-btn" onclick="generatePDF('official')">
+                <i class="fas fa-certificate"></i> Official Report Card
+            </button>
+
+            <button class="cancel-btn" onclick="closePdfModal()">Cancel</button>
+        </div>
+    </div>
+
     <script src="dashboard.js"></script>
+    <script>
+        document.getElementById('currentDateDisplay').innerText = new Date().toDateString();
+    </script>
 </body>
 </html>

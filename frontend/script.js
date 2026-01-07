@@ -1,45 +1,55 @@
-// New contents for script.js
-document.getElementById("loginForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    const loginData = {
-        mobile: this.mobile.value,
-        password: this.password.value
-    };
-
-    try {
-        // Send login data to the backend server
-        const response = await fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginData)
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            
-            // Save the token and user info
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-
-            // --- ADMIN REDIRECT ---
-            // Check if the user has the 'admin' role
-            if (data.user.role === 'admin') {
-                window.location.href = "admin_dashboard.html"; // Redirect admin
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. SOUND TOGGLE LOGIC ---
+    const video = document.getElementById('bg-video');
+    const soundBtn = document.getElementById('soundBtn');
+    
+    if(video && soundBtn) {
+        soundBtn.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false; // Turn Sound ON
+                soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
             } else {
-                window.location.href = "dashboard.html"; // Redirect regular user
+                video.muted = true; // Turn Sound OFF
+                soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
             }
-            // --- END REDIRECT ---
+        });
+    }
 
-        } else {
-            const data = await response.json();
-            alert("Login failed: " + data.msg);
-        }
+    // --- 2. LOGIN LOGIC ---
+    const loginForm = document.getElementById('loginForm');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const mobile = document.getElementById('mobile').value;
+            const password = document.getElementById('password').value;
 
-    } catch (err) {
-        console.error(err);
-        alert("An error occurred. See console for details.");
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mobile, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+
+                    if (data.user.role === 'admin') {
+                        window.location.href = 'admin_dashboard.html';
+                    } else {
+                        window.location.href = 'dashboard.html';
+                    }
+                } else {
+                    alert(data.msg);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Login failed. Server might be down.');
+            }
+        });
     }
 });
