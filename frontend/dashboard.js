@@ -4,7 +4,7 @@
 let allAttendanceData = []; 
 const token = localStorage.getItem('token');
 const user = JSON.parse(localStorage.getItem('user'));
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://student-attendance-psi-topaz.vercel.app/api';
 
 if (!token || !user) {
     window.location.href = "index.html";
