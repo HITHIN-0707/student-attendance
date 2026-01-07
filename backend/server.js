@@ -334,5 +334,11 @@ app.post('/api/admin/restore', adminAuth, async (req, res) => {
     } catch (err) { res.status(500).send('Server Error: ' + err.message); }
 });
 
+app.get('/',(req,res)=>{
+    res.send({
+        activeStatus:true,
+        error:false,
+    })
+})
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
