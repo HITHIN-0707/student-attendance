@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. USER MANAGEMENT ---
     async function loadAllUsers() {
         try {
-            const res = await fetch(`${API_URL}/all-users`, { headers: {'x-auth-token': token} });
+            const res = await fetch(`${API_URL}/admin/all-users`, { headers: {'x-auth-token': token} });
             const users = await res.json();
             allUsersData = users; 
             renderTable(users);
