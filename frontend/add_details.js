@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const subjectInputsContainer = document.getElementById("subjectInputs");
     const detailsForm = document.getElementById("detailsForm");
     const token = localStorage.getItem('token');
-
+    const API_URL = 'https://my-attendance-api-7vbt.onrender.com/api';
     // If no token, redirect to login
     if (!token) {
         window.location.href = 'index.html';
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         try {
             // Send data to the backend
-            const response = await fetch('https://student-attendance-psi-topaz.vercel.app/', {
+            const response = await fetch(`${API_URL}/details`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
