@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
     const currentUser = JSON.parse(localStorage.getItem('user'));
-    const API_URL = 'https://student-attendance-psi-topaz.vercel.app/api';
+   const API_URL = 'https://my-attendance-api-7vbt.onrender.com/api';
     let allUsersData = [];
 
     if (!token || !currentUser || currentUser.role !== 'admin') {

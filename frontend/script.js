@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('https://student-attendance-psi-topaz.vercel.app/api', {
+                const response = await fetch('https://my-attendance-api-7vbt.onrender.com/api', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ mobile, password })

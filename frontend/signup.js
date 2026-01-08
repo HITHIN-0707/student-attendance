@@ -12,7 +12,7 @@ document.getElementById("signupForm").addEventListener("submit", async function(
 
     try {
         // Send data to the backend server
-        const response = await fetch('https://student-attendance-psi-topaz.vercel.app/api', {
+        const response = await fetch('https://my-attendance-api-7vbt.onrender.com/api', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

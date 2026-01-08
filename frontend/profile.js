@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. AUTH CHECK ---
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
-    const API_URL = 'https://student-attendance-psi-topaz.vercel.app/api';
+    const API_URL = 'https://my-attendance-api-7vbt.onrender.com/api';
 
     if (!token || !user) {
         window.location.href = "index.html";
