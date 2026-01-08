@@ -12,7 +12,8 @@ document.getElementById("signupForm").addEventListener("submit", async function(
 
     try {
         // Send data to the backend server
-        const response = await fetch('https://my-attendance-api-7vbt.onrender.com/api', {
+       // Add '/signup' at the end
+const response = await fetch('https://my-attendance-api-7vbt.onrender.com/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
