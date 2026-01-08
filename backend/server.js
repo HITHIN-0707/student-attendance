@@ -13,10 +13,9 @@ const AuditLog = require('./AuditLog.js');
 dotenv.config({ path: './.env' });
 
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: '50mb' })); 
-app.use(cors({
-    origin: ["https://student-attendance-portal-early.netlify.app"]
-}));
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB Connected...'))
