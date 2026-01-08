@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalBody.innerHTML = '<p style="text-align:center;">Loading user data...</p>';
 
         try {
-            const res = await fetch(`${API_URL}/user/${id}/full-details`, { headers: { 'x-auth-token': token } });
+            const res = await fetch(`${API_URL}/admin/user/${id}/full-details`, { headers: { 'x-auth-token': token } });
             if (!res.ok) throw new Error("Failed to load details");
             const data = await res.json();
             const u = data.user;
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
         try {
-            const res = await fetch(`${API_URL}/create-user`, {
+            const res = await fetch(`${API_URL}/admin/create-user`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'x-auth-token': token},
                 body: JSON.stringify(payload)
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.deleteUser = async (id) => {
         if (!confirm("Delete user and wipe all data?")) return;
         try {
-            const res = await fetch(`${API_URL}/user/${id}`, { method: 'DELETE', headers: {'x-auth-token': token} });
+            const res = await fetch(`${API_URL}/admin/user/${id}`, { method: 'DELETE', headers: {'x-auth-token': token} });
             const data = await res.json();
             if(res.ok) { alert(data.msg); loadAllUsers(); } else alert("Error: " + data.msg);
         } catch(e) { alert("Error deleting user"); }
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.changeRole = async (id, role) => {
         if (!confirm(`Change role to ${role}?`)) return;
         try {
-            const res = await fetch(`${API_URL}/user-role/${id}`, { 
+            const res = await fetch(`${API_URL}/admin/user-role/${id}`, { 
                 method: 'PUT', 
                 headers: {'Content-Type': 'application/json', 'x-auth-token': token},
                 body: JSON.stringify({role}) 
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!newPass) return;
         if (newPass.length < 6) { alert("Too short!"); return; }
         try {
-            const res = await fetch(`${API_URL}/reset-password/${id}`, {
+            const res = await fetch(`${API_URL}/admin/reset-password/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
                 body: JSON.stringify({ newPassword: newPass })
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.loadAtRiskData = async () => {
         document.getElementById('riskContainer').innerHTML = "Analyzing...";
         try {
-            const res = await fetch(`${API_URL}/at-risk`, { headers: {'x-auth-token': token} });
+            const res = await fetch(`${API_URL}/admin/at-risk`, { headers: {'x-auth-token': token} });
             const data = await res.json();
             if(data.length === 0) { document.getElementById('riskContainer').innerHTML = "<p>🎉 No students at risk.</p>"; return; }
             let html = ``;
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.loadLogs = async () => {
         try {
-            const res = await fetch(`${API_URL}/logs`, { headers: {'x-auth-token': token} });
+            const res = await fetch(`${API_URL}/admin/logs`, { headers: {'x-auth-token': token} });
             const logs = await res.json();
             let html = ``;
             logs.forEach(l => { html += `<div class="log-item"><small style="color:#888;">${new Date(l.timestamp).toLocaleString()}</small><br><strong>${l.action}</strong> by ${l.adminName}<br>${l.details}</div>`; });
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.downloadBackup = async () => {
         if(!confirm("Download system backup?")) return;
         try {
-            const res = await fetch(`${API_URL}/backup`, { headers: {'x-auth-token': token} });
+            const res = await fetch(`${API_URL}/admin/backup`, { headers: {'x-auth-token': token} });
             const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = async (e) => {
             try {
                 const data = JSON.parse(e.target.result);
-                const res = await fetch(`${API_URL}/restore`, {
+                const res = await fetch(`${API_URL}/admin/restore`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'x-auth-token': token},
                     body: JSON.stringify(data)
